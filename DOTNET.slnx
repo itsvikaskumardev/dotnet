@@ -1,5 +1,4 @@
 <Solution>
-  <Project Path="ASPCoreWebAPi/ASPCoreWebAPI-1.csproj" Id="820b7029-bcd6-4729-92a0-31816bbfa980" />
   <Project Path="ASPCoreWebAPICRUD/ASPCoreWebAPICRUD-2.csproj" Id="bf1ac586-217e-4da8-a18b-c878a98c930f" />
   <Project Path="CQRSMediatorPattern/CQRSMediatorPattern.csproj" Id="a1264980-f851-4c0a-b531-2da3c80bc38a" />
   <Project Path="NZWalks-ASP.NET Core/NZWalks-ASP.NET Core.csproj" Id="2ba89bfd-3722-4103-8b93-b9369b842577" />
