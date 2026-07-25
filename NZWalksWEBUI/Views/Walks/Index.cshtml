@@ -1,0 +1,53 @@
+@model IEnumerable<NZWalksWEBUI.Models.DTO.WalkDto>
+
+<h1 class="mt-3">Walks</h1>
+
+<div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-primary" asp-controller="Walks" asp-action="Add">Add Walk</a>
+</div>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Length (Km)</th>
+            <th>Region</th>
+            <th>Difficulty</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var walk in Model)
+            {
+                <tr>
+                    <td>@walk.Id</td>
+                    <td>@walk.Name</td>
+                    <td>@walk.Description</td>
+                    <td>@walk.LengthInKm</td>
+                    <td>@walk.Region?.Name</td>
+                    <td>@walk.Difficulty?.Name</td>
+                    <td>
+                        <a asp-controller="Walks" asp-action="Edit" asp-route-id="@walk.Id" class="btn btn-light">Edit</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center">No walks found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

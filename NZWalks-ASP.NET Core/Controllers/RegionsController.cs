@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks_ASP.NET_Core.Data;
 using NZWalks_ASP.NET_Core.Models.Domain;
@@ -12,7 +12,7 @@ namespace NZWalks_ASP.NET_Core.Controllers
     // https:localhost:1234/api/
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
