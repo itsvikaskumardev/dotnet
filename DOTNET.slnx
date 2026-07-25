@@ -3,6 +3,7 @@
   <Project Path="ASPCoreWebAPICRUD/ASPCoreWebAPICRUD-2.csproj" Id="bf1ac586-217e-4da8-a18b-c878a98c930f" />
   <Project Path="CQRSMediatorPattern/CQRSMediatorPattern.csproj" Id="a1264980-f851-4c0a-b531-2da3c80bc38a" />
   <Project Path="NZWalks-ASP.NET Core/NZWalks-ASP.NET Core.csproj" Id="2ba89bfd-3722-4103-8b93-b9369b842577" />
+  <Project Path="NZWalksWEBUI/NZWalksWEBUI.csproj" Id="12637c65-9eac-4a17-898a-91fff40752ce" />
   <Project Path="Web-API-Versoning-API/Web-API-Versoning-API.csproj" Id="229f6d0f-bc13-43a9-90b8-b385827976ce" />
   <Project Path="WebMinimalExample/WebMinimalExample.csproj" Id="69b623aa-2dd1-49a4-8a88-73abc281d4e4" />
 </Solution>

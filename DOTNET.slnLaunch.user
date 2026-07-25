@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "NZWalks-ASP.NET Core\\NZWalks-ASP.NET Core.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "NZWalksWEBUI\\NZWalksWEBUI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
