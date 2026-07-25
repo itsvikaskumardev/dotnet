@@ -3364,9 +3364,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\ASPCoreWebAPICRUD\\ASPCoreWebAPICRUD-2.csproj",
-      "projectName": "ASPCoreWebAPICRUD-2",
-      "projectPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\ASPCoreWebAPICRUD\\ASPCoreWebAPICRUD-2.csproj",
+      "projectUniqueName": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\ASPCoreWebAPICRUD\\ASPCoreWebAPICRUD.csproj",
+      "projectName": "ASPCoreWebAPICRUD",
+      "projectPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\ASPCoreWebAPICRUD\\ASPCoreWebAPICRUD.csproj",
       "packagesPath": "C:\\Users\\VikasKumar\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\ASPCoreWebAPICRUD\\obj\\",
       "projectStyle": "PackageReference",
