@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ASPCoreWebAPICRUD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90b167f0a9b56698b250ff0829ae1956dcb2dc03")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb3e09cf9dda1c56e69c2c934f5abd8713cb7d02")]
 [assembly: System.Reflection.AssemblyProductAttribute("ASPCoreWebAPICRUD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ASPCoreWebAPICRUD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
