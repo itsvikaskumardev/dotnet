@@ -12,7 +12,7 @@ namespace WebMinimalExample.Endpoints
     {
         public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
         {
-            var categoryGroup = app.MapGroup("/api/categories");
+            var categoryGroup = app.MapGroup("/api/categories").WithTags("Categories").RequireAuthorization();
 
             categoryGroup.MapGet("/", GetAllCategories)
                  .WithName("GetAllCategories")

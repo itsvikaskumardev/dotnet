@@ -1,8 +1,9 @@
 {
   "openapi": "3.1.1",
   "info": {
-    "title": "WebMinimalExample | v1",
-    "version": "1.0.0"
+    "title": "WebMinimalExample API",
+    "description": "Minimal API with JWT Bearer Authentication",
+    "version": "v1"
   },
   "servers": [
     {
@@ -13,49 +14,10 @@
     }
   ],
   "paths": {
-    "/helloworld": {
-      "get": {
-        "tags": [
-          "WebMinimalExample"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/helloworld/{id}": {
-      "get": {
-        "tags": [
-          "WebMinimalExample"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
-              "type": [
-                "integer",
-                "string"
-              ],
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/categories": {
       "get": {
         "tags": [
-          "CategoryEndpoints"
+          "Categories"
         ],
         "operationId": "GetAllCategories",
         "responses": {
@@ -83,7 +45,7 @@
       },
       "post": {
         "tags": [
-          "CategoryEndpoints"
+          "Categories"
         ],
         "operationId": "CreateCategory",
         "requestBody": {
@@ -143,7 +105,7 @@
     "/api/categories/{id}": {
       "get": {
         "tags": [
-          "CategoryEndpoints"
+          "Categories"
         ],
         "operationId": "GetCategoryById",
         "parameters": [
@@ -193,7 +155,7 @@
       },
       "put": {
         "tags": [
-          "CategoryEndpoints"
+          "Categories"
         ],
         "operationId": "UpdateCategory",
         "parameters": [
@@ -263,7 +225,7 @@
       },
       "delete": {
         "tags": [
-          "CategoryEndpoints"
+          "Categories"
         ],
         "operationId": "DeleteCategory",
         "parameters": [
@@ -291,6 +253,116 @@
           },
           "404": {
             "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "Register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterationRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
@@ -372,6 +444,21 @@
       "HttpStatusCode": {
         "type": "integer"
       },
+      "LoginRequestDTO": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
       "ProblemDetails": {
         "type": "object",
         "properties": {
@@ -409,15 +496,51 @@
             ]
           }
         }
+      },
+      "RegisterationRequestDto": {
+        "required": [
+          "email",
+          "name",
+          "password",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter your JWT token in the format: Bearer {your token}",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
   "tags": [
     {
-      "name": "WebMinimalExample"
+      "name": "Categories"
     },
     {
-      "name": "CategoryEndpoints"
+      "name": "Authentication"
     }
   ]
 }

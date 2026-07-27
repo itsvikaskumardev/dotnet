@@ -1,5 +1,96 @@
 [
   {
+    "ContainingType": "WebMinimalExample.Endpoints.AuthEndpoints",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequestDTO",
+        "Type": "WebMinimalExample.Models.DTOs.LoginRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 401
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "Authentication"
+    ],
+    "EndpointName": "Login"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.AuthEndpoints",
+    "Method": "Register",
+    "RelativePath": "api/auth/register",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerationRequestDto",
+        "Type": "WebMinimalExample.Models.DTOs.RegisterationRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "Authentication"
+    ],
+    "EndpointName": "Register"
+  },
+  {
     "ContainingType": "WebMinimalExample.Endpoints.CategoryEndpoints",
     "Method": "GetAllCategories",
     "RelativePath": "api/categories/",
@@ -22,6 +113,9 @@
         ],
         "StatusCode": 500
       }
+    ],
+    "Tags": [
+      "Categories"
     ],
     "EndpointName": "GetAllCategories"
   },
@@ -69,6 +163,9 @@
         "StatusCode": 500
       }
     ],
+    "Tags": [
+      "Categories"
+    ],
     "EndpointName": "CreateCategory"
   },
   {
@@ -107,6 +204,9 @@
         ],
         "StatusCode": 500
       }
+    ],
+    "Tags": [
+      "Categories"
     ],
     "EndpointName": "GetCategoryById"
   },
@@ -159,6 +259,9 @@
         "StatusCode": 500
       }
     ],
+    "Tags": [
+      "Categories"
+    ],
     "EndpointName": "UpdateCategory"
   },
   {
@@ -205,44 +308,9 @@
         "StatusCode": 500
       }
     ],
-    "EndpointName": "DeleteCategory"
-  },
-  {
-    "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_2",
-    "RelativePath": "helloworld",
-    "HttpMethod": "GET",
-    "IsController": false,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_3",
-    "RelativePath": "helloworld/{id}",
-    "HttpMethod": "GET",
-    "IsController": false,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
+    "Tags": [
+      "Categories"
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
+    "EndpointName": "DeleteCategory"
   }
 ]

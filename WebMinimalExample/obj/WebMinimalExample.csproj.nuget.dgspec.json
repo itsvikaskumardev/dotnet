@@ -37,6 +37,12 @@
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1901",
+            "NU1902",
+            "NU1903",
+            "NU1904"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -56,6 +62,14 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[16.1.1, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[10.0.10, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -77,6 +91,10 @@
               "target": "Package",
               "version": "[10.0.9, )"
             },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[10.0.2, )"
@@ -84,6 +102,10 @@
             "Scalar.AspNetCore": {
               "target": "Package",
               "version": "[2.16.5, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.21.0, )"
             }
           },
           "imports": [

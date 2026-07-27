@@ -380,10 +380,16 @@ C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebM
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\swae.build.ex.cache
-C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\WebMinim.59FA19E4.Up2Date
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\WebMinimalExample.dll
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\refint\WebMinimalExample.dll
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\WebMinimalExample.pdb
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\WebMinimalExample.genruntimeconfig.cache
 C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\ref\WebMinimalExample.dll
+C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\bin\Debug\net10.0\BCrypt-Net-Next.dll
+C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\VikasKumar\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\Vikas\DOTNET\WebMinimalExample\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

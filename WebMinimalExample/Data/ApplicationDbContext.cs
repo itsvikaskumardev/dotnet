@@ -3,7 +3,7 @@ using WebMinimalExample.Models;
 
 namespace WebMinimalExample.Data
 {
-    public class ApplicationDbContext:DbContext
+    public class ApplicationDbContext : DbContext
     {
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
@@ -12,6 +12,7 @@ namespace WebMinimalExample.Data
         }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<LocalUser> LocalUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
