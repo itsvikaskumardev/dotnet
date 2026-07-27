@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
+//---------------------Scaller UI-----------------------------------------------------------------------
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer((document, context, cancellationToken) =>
@@ -48,6 +49,8 @@ builder.Services.AddOpenApi(options =>
         return Task.CompletedTask;
     });
 });
+
+//---------------------Db Connection and Jwt Token -----------------------------------------------------------------------
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -86,6 +89,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+
+//---------------------Auto Mapper -----------------------------------------------------------------------
 
 builder.Services.AddAutoMapper(cfg =>
 {
@@ -100,6 +107,8 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<Category, CategoryDTO>().ReverseMap();
 
 });
+
+//-----------------------------Build-----------------------------------------------------------------------
 
 
 var app = builder.Build();

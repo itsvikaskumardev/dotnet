@@ -1,9 +1,7 @@
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
-using WebMinimalExample.Data;
 using WebMinimalExample.Models;
 using WebMinimalExample.Models.DTOs;
+using WebMinimalExample.Services;
 
 
 namespace WebMinimalExample.Endpoints
@@ -27,6 +25,7 @@ namespace WebMinimalExample.Endpoints
 
             categoryGroup.MapPost("", CreateCategory)
                  .WithName("CreateCategory")
+                 .RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
                  .Produces<ApiResponse>(StatusCodes.Status201Created)
                  .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
                  .Produces<ApiResponse>(StatusCodes.Status404NotFound)
@@ -35,6 +34,7 @@ namespace WebMinimalExample.Endpoints
 
             categoryGroup.MapPut("/{id:int}", UpdateCategory)
                  .WithName("UpdateCategory")
+                 .RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
                  .Produces<ApiResponse>(StatusCodes.Status200OK)
                  .Produces<ApiResponse>(StatusCodes.Status404NotFound)
                  .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
@@ -43,6 +43,7 @@ namespace WebMinimalExample.Endpoints
 
             categoryGroup.MapDelete("/{id:int}", DeleteCategory)
                  .WithName("DeleteCategory")
+                 .RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
                  .Produces<ApiResponse>(StatusCodes.Status200OK)
                  .Produces<ApiResponse>(StatusCodes.Status404NotFound)
                  .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
@@ -52,9 +53,9 @@ namespace WebMinimalExample.Endpoints
         }
 
 
-        private static async Task<IResult> GetAllCategories(ApplicationDbContext db)
+        private static async Task<IResult> GetAllCategories(ICategoryService categoryService)
         {
-            var categories = await db.Categories.ToListAsync();
+            var categories = await categoryService.GetAllCategoriesAsync();
             return Results.Ok(new ApiResponse
             {
                 IsSuccess = true,
@@ -64,11 +65,9 @@ namespace WebMinimalExample.Endpoints
         }
 
 
-        private static async Task<IResult> GetCategoryById(int id, ILogger<Program> logger, ApplicationDbContext db)
+        private static async Task<IResult> GetCategoryById(int id, ICategoryService categoryService)
         {
-            logger.LogInformation("Retrieving category with ID:{CategoryId}", id);
-
-            var category = await db.Categories.FindAsync(id);
+            var category = await categoryService.GetCategoryByIdAsync(id);
             if (category is null)
             {
                 return Results.NotFound(new ApiResponse
@@ -90,19 +89,11 @@ namespace WebMinimalExample.Endpoints
 
         private static async Task<IResult> CreateCategory(
             CategoryCreateDTO categoryCreateDTO,
-            ApplicationDbContext db,
-            IMapper mapper)
+            ICategoryService categoryService)
         {
-            var category = mapper.Map<Category>(categoryCreateDTO);
+            var categoryDTO = await categoryService.CreateCategoryAsync(categoryCreateDTO);
 
-            category.AddedDate = DateTime.UtcNow;
-
-            await db.Categories.AddAsync(category);
-            await db.SaveChangesAsync();
-
-            var categoryDTO = mapper.Map<CategoryDTO>(category);
-
-            return Results.Created($"/api/categories/{category.Id}", new ApiResponse
+            return Results.Created($"/api/categories/{categoryDTO.Id}", new ApiResponse
             {
                 IsSuccess = true,
                 Result = categoryDTO,
@@ -112,11 +103,14 @@ namespace WebMinimalExample.Endpoints
 
 
 
-        private static async Task<IResult> UpdateCategory(int id, CategoryUpdateDTO categoryUpdateDTO, ApplicationDbContext db, IMapper mapper)
+        private static async Task<IResult> UpdateCategory(
+            int id,
+            CategoryUpdateDTO categoryUpdateDTO,
+            ICategoryService categoryService)
         {
-            var category = await db.Categories.FindAsync(id);
+            var categoryDTO = await categoryService.UpdateCategoryAsync(id, categoryUpdateDTO);
 
-            if (category is null)
+            if (categoryDTO is null)
             {
                 return Results.NotFound(new ApiResponse
                 {
@@ -125,12 +119,6 @@ namespace WebMinimalExample.Endpoints
                     ErrorMessages = ["Category not found"]
                 });
             }
-
-            mapper.Map(categoryUpdateDTO, category);
-
-            await db.SaveChangesAsync();
-
-            var categoryDTO = mapper.Map<CategoryDTO>(category);
 
             return Results.Ok(new ApiResponse
             {
@@ -140,11 +128,11 @@ namespace WebMinimalExample.Endpoints
             });
         }
 
-        private static async Task<IResult> DeleteCategory(int id, ApplicationDbContext db)
+        private static async Task<IResult> DeleteCategory(int id, ICategoryService categoryService)
         {
-            var category = await db.Categories.FindAsync(id);
+            var deleted = await categoryService.DeleteCategoryAsync(id);
 
-            if (category is null)
+            if (!deleted)
             {
                 return Results.NotFound(new ApiResponse
                 {
@@ -153,9 +141,6 @@ namespace WebMinimalExample.Endpoints
                     ErrorMessages = ["Category not found"]
                 });
             }
-
-            db.Categories.Remove(category);
-            await db.SaveChangesAsync();
 
             return Results.Ok(new ApiResponse
             {
