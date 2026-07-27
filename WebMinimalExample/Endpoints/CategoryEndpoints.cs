@@ -20,34 +20,40 @@ namespace WebMinimalExample.Endpoints
                  .ProducesProblem(StatusCodes.Status500InternalServerError);
 
             categoryGroup.MapGet("/{id:int}", GetCategoryById)
-                 .WithName("GetCategoryById")
-                 .Produces<ApiResponse>(StatusCodes.Status200OK)
-                 .ProducesProblem(StatusCodes.Status404NotFound)
-                 .ProducesProblem(StatusCodes.Status500InternalServerError);
+                   .WithName("GetCategoryById")
+                   .Produces<ApiResponse>(StatusCodes.Status200OK)
+                   .Produces<ApiResponse>(StatusCodes.Status404NotFound)
+                   .Produces<ApiResponse>(StatusCodes.Status500InternalServerError);
 
             categoryGroup.MapPost("", CreateCategory)
                  .WithName("CreateCategory")
                  .Produces<ApiResponse>(StatusCodes.Status201Created)
-                 .ProducesProblem(StatusCodes.Status400BadRequest)
-                 .ProducesProblem(StatusCodes.Status500InternalServerError);
+                 .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
+                 .Produces<ApiResponse>(StatusCodes.Status404NotFound)
+                 .Produces<ApiResponse>(StatusCodes.Status500InternalServerError);
+
 
             categoryGroup.MapPut("/{id:int}", UpdateCategory)
                  .WithName("UpdateCategory")
                  .Produces<ApiResponse>(StatusCodes.Status200OK)
-                 .ProducesProblem(StatusCodes.Status404NotFound)
-                 .ProducesProblem(StatusCodes.Status400BadRequest)
-                 .ProducesProblem(StatusCodes.Status500InternalServerError);
+                 .Produces<ApiResponse>(StatusCodes.Status404NotFound)
+                 .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
+                 .Produces<ApiResponse>(StatusCodes.Status500InternalServerError);
+
 
             categoryGroup.MapDelete("/{id:int}", DeleteCategory)
                  .WithName("DeleteCategory")
                  .Produces<ApiResponse>(StatusCodes.Status200OK)
-                 .ProducesProblem(StatusCodes.Status404NotFound)
-                 .ProducesProblem(StatusCodes.Status500InternalServerError);
+                 .Produces<ApiResponse>(StatusCodes.Status404NotFound)
+                 .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
+                 .Produces<ApiResponse>(StatusCodes.Status500InternalServerError);
+
+
         }
 
 
         private static async Task<IResult> GetAllCategories(ApplicationDbContext db)
-            {
+        {
             var categories = await db.Categories.ToListAsync();
             return Results.Ok(new ApiResponse
             {
@@ -89,25 +95,24 @@ namespace WebMinimalExample.Endpoints
         {
             var category = mapper.Map<Category>(categoryCreateDTO);
 
-            //var category = new Category
-            //{ Name = categoryCreateDTO.Name, AddedDate = DateTime.UtcNow // insted of this we use auto mappr to map with DTO };
-
             category.AddedDate = DateTime.UtcNow;
 
             await db.Categories.AddAsync(category);
             await db.SaveChangesAsync();
 
-            //var categoryDTO = new CategoryDTO
-            //{Id = category.Id, Name = category.Name, AddedDate = category.AddedDate};
+            var categoryDTO = mapper.Map<CategoryDTO>(category);
 
-            var categoryDTO = mapper.Map<CategoryDTO>(category); // map category entity to CategoryDTO
-
-            return Results.Created($"/api/categories/{category.Id}", categoryDTO);
+            return Results.Created($"/api/categories/{category.Id}", new ApiResponse
+            {
+                IsSuccess = true,
+                Result = categoryDTO,
+                StatusCode = HttpStatusCode.Created
+            });
         }
 
 
 
-        private static async Task<IResult> UpdateCategory( int id,CategoryUpdateDTO categoryUpdateDTO,ApplicationDbContext db,IMapper mapper)
+        private static async Task<IResult> UpdateCategory(int id, CategoryUpdateDTO categoryUpdateDTO, ApplicationDbContext db, IMapper mapper)
         {
             var category = await db.Categories.FindAsync(id);
 
@@ -127,7 +132,12 @@ namespace WebMinimalExample.Endpoints
 
             var categoryDTO = mapper.Map<CategoryDTO>(category);
 
-            return Results.Ok(categoryDTO);
+            return Results.Ok(new ApiResponse
+            {
+                IsSuccess = true,
+                Result = categoryDTO,
+                StatusCode = HttpStatusCode.OK
+            });
         }
 
         private static async Task<IResult> DeleteCategory(int id, ApplicationDbContext db)
@@ -136,18 +146,23 @@ namespace WebMinimalExample.Endpoints
 
             if (category is null)
             {
-                return Results.NotFound();
+                return Results.NotFound(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    ErrorMessages = ["Category not found"]
+                });
             }
 
             db.Categories.Remove(category);
             await db.SaveChangesAsync();
 
-            return Results.NoContent();
+            return Results.Ok(new ApiResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Result = "Category deleted successfully"
+            });
         }
-
-
-
-
-
     }
 }
