@@ -117,7 +117,8 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.CreateMap<MenuItem, MenuItemDTO>()
-         .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty));
+         .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty))
+         .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ImageUrl));
     cfg.CreateMap<MenuItemCreateDTO, MenuItem>()
         .ForMember(dest => dest.Id, opt => opt.Ignore())
         .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
@@ -146,6 +147,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapCategoryEndpoints();
+app.MapMenuItemEndpoints();
 app.MapAuthEndpoints();
 
 
