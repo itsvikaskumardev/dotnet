@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using WebMinimalExample.Data;
@@ -27,6 +28,7 @@ namespace WebMinimalExample.Endpoints
 
             menuItemGroup.MapPost("", CreateMenuItem)
                      .WithName("CreateMenuItem")
+                     .DisableAntiforgery()
                      //.RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
                      .Produces<ApiResponse>(StatusCodes.Status201Created)
                      .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
@@ -35,6 +37,7 @@ namespace WebMinimalExample.Endpoints
 
             menuItemGroup.MapPut("/{id:int}", UpdateMenuItem)
                      .WithName("UpdateMenuItem")
+                     .DisableAntiforgery()
                      //.RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
                      .Produces<ApiResponse>(StatusCodes.Status200OK)
                      .Produces<ApiResponse>(StatusCodes.Status404NotFound)
@@ -48,6 +51,111 @@ namespace WebMinimalExample.Endpoints
                      .Produces<ApiResponse>(StatusCodes.Status404NotFound)
                      .Produces<ApiResponse>(StatusCodes.Status500InternalServerError);
         }
+
+        //---------------------------------------------------------------------------------------------------------
+        /*
+         
+        ---------------------------
+         
+         1. FirstOrDefaultAsync():
+        
+        It returns the first record matching the condition.
+        var menuItem = await db.MenuItems .FirstOrDefaultAsync(u => u.Id == id);
+         ie.
+        SELECT TOP 1 * FROM MenuItems WHERE Id = 2;
+        ---------------------------
+         
+        2.ToListAsync() :
+        
+        It fetches all records from the table and returns them as a List.
+        var menuItems = await db.MenuItems.ToListAsync();
+        SELECT * FROM MenuItems; Return Array of Objects
+
+        ---------------------------
+
+        3. FindAsync():
+
+        It finds a record using its Primary Key.
+
+        var category = await db.Categories.FindAsync(menuItemCreateDTO.CategoryId);
+        
+        ---------------------------
+        4. Include(): 
+        
+        Categories: 
+        | Id | Name   |
+        | -- | ------ |
+        | 1  | Pizza  |
+        | 2  | Drinks |
+
+        MenuItems
+
+        | Id | Name       | CategoryId |
+        | -- | ---------- | ---------- |
+        | 1  | Margherita | 1          |
+        | 2  | Coke       | 2          |
+
+
+      -> Without Include: var menuItems = await db.MenuItems.ToListAsync();
+        I got: 
+        MenuItem
+
+        Id = 1
+        Name = Margherita
+        CategoryId = 1
+
+        Category = null
+
+        -----------------------------------
+
+     -> With Inclue: .Include(m => m.Category)
+         EF core performs a join :
+
+        SELECT *
+        FROM MenuItems
+        LEFT JOIN Categories
+        ON MenuItems.CategoryId = Categories.Id
+
+        I got :
+        MenuItem
+
+        Id = 1
+
+        Name = Margherita
+
+        CategoryId = 1
+
+        Category
+            Id = 1
+            Name = Pizza
+
+        ---------------------------
+
+        | Method                           | Purpose                                        | Returns if not found |
+| -------------------------------- | ---------------------------------------------- | -------------------- |
+| `ToListAsync()`                  | Gets all matching records                      | Empty list (`[]`)    |
+| `FirstOrDefaultAsync(condition)` | Gets the first matching record                 | `null`               |
+| `FindAsync(primaryKey)`          | Finds a record by primary key                  | `null`               |
+| `Include()`                      | Loads related entities (navigation properties) | Not applicable       |
+
+       
+         5. Step 1: AddAsync(menuItem): 
+        This does not insert anything into the database immediately.
+        
+        It tells EF Core:
+        "Track this new menuItem. I want to insert it into the database when I save."
+        
+        Step 2: SaveChangesAsync()
+         Now EF Core looks at everything it is tracking.
+        
+        It will generate sql like : 
+        
+        INSERT INTO MenuItems(Name, Price, CategoryId)
+        VALUES ('Pasta', 220, 1); 
+        and excute it 
+         
+         */
+        //---------------------------------------------------------------------------------------------------------------------
 
         private static async Task<IResult> GetAllMenuItems(ApplicationDbContext db, IMapper mapper)
         {
@@ -82,7 +190,8 @@ namespace WebMinimalExample.Endpoints
         }
 
         private static async Task<IResult> CreateMenuItem(
-            MenuItemCreateDTO menuItemCreateDTO,
+            [FromForm] MenuItemCreateDTO menuItemCreateDTO,
+            IFormFile? formFile,
             ApplicationDbContext db,
             IMapper mapper)
         {
@@ -100,6 +209,23 @@ namespace WebMinimalExample.Endpoints
             var menuItem = mapper.Map<MenuItem>(menuItemCreateDTO);
             menuItem.CreatedDate = DateTime.UtcNow;
 
+            if (formFile is not null && formFile.Length > 0)
+            {
+                string fileName = $"{Guid.NewGuid()}{Path.GetExtension(formFile.FileName)}";
+                string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "menuitems");
+
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                string filePath = Path.Combine(uploadPath, fileName);
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await formFile.CopyToAsync(stream);
+
+                menuItem.ImageUrl = $"/images/menuitems/{fileName}";
+            }
+
             await db.MenuItems.AddAsync(menuItem);
             await db.SaveChangesAsync();
 
@@ -116,7 +242,8 @@ namespace WebMinimalExample.Endpoints
 
         private static async Task<IResult> UpdateMenuItem(
             int id,
-            MenuItemUpdateDTO menuItemUpdateDTO,
+            [FromForm] MenuItemUpdateDTO menuItemUpdateDTO,
+            IFormFile? formFile,
             ApplicationDbContext db,
             IMapper mapper)
         {
@@ -143,6 +270,34 @@ namespace WebMinimalExample.Endpoints
             }
 
             mapper.Map(menuItemUpdateDTO, menuItem);
+
+            if (formFile is not null && formFile.Length > 0)
+            {
+                string fileName = $"{Guid.NewGuid()}{Path.GetExtension(formFile.FileName)}";
+                string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "menuitems");
+
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                // Delete old image file if it exists and is local
+                if (!string.IsNullOrEmpty(menuItem.ImageUrl))
+                {
+                    string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", menuItem.ImageUrl.TrimStart('/'));
+                    if (File.Exists(oldFilePath))
+                    {
+                        File.Delete(oldFilePath);
+                    }
+                }
+
+                string filePath = Path.Combine(uploadPath, fileName);
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await formFile.CopyToAsync(stream);
+
+                menuItem.ImageUrl = $"/images/menuitems/{fileName}";
+            }
+
             await db.SaveChangesAsync();
 
             menuItem.Category = category;

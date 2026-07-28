@@ -136,15 +136,28 @@ builder.Services.AddAutoMapper(cfg =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+//-----------------------------Scalar Document-----------------------------------------------------------------------
 
 app.MapOpenApi();
 app.MapScalarApiReference();
 
 
 
+//-----------------------------Configuration -----------------------------------------------------------------------
+
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStaticFiles();
+
+
+
+
+
+//-----------------------------Endpoints-----------------------------------------------------------------------
+
 
 app.MapCategoryEndpoints();
 app.MapMenuItemEndpoints();

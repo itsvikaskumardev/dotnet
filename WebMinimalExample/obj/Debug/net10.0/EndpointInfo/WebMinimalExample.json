@@ -320,9 +320,22 @@
         "operationId": "CreateMenuItem",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/MenuItemCreateDTO"
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/MenuItemCreateDTO"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "formFile": {
+                        "$ref": "#/components/schemas/IFormFile"
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -442,9 +455,22 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/MenuItemUpdateDTO"
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/MenuItemUpdateDTO"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "formFile": {
+                        "$ref": "#/components/schemas/IFormFile"
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -703,6 +729,10 @@
       },
       "HttpStatusCode": {
         "type": "integer"
+      },
+      "IFormFile": {
+        "type": "string",
+        "format": "binary"
       },
       "LoginRequestDTO": {
         "required": [

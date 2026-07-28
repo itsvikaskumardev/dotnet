@@ -354,6 +354,11 @@
         "Name": "menuItemCreateDTO",
         "Type": "WebMinimalExample.Models.DTOs.MenuItemCreateDTO",
         "IsRequired": true
+      },
+      {
+        "Name": "formFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -450,6 +455,11 @@
         "Name": "menuItemUpdateDTO",
         "Type": "WebMinimalExample.Models.DTOs.Item.MenuItemUpdateDTO",
         "IsRequired": true
+      },
+      {
+        "Name": "formFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
