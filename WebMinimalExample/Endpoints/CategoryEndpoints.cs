@@ -10,7 +10,7 @@ namespace WebMinimalExample.Endpoints
     {
         public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
         {
-            var categoryGroup = app.MapGroup("/api/categories").WithTags("Categories").RequireAuthorization();
+            var categoryGroup = app.MapGroup("/api/categories").WithTags("Categories");//.RequireAuthorization();
 
             categoryGroup.MapGet("/", GetAllCategories)
                  .WithName("GetAllCategories")
@@ -25,7 +25,7 @@ namespace WebMinimalExample.Endpoints
 
             categoryGroup.MapPost("", CreateCategory)
                  .WithName("CreateCategory")
-                 .RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
+                 //.RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
                  .Produces<ApiResponse>(StatusCodes.Status201Created)
                  .Produces<ApiResponse>(StatusCodes.Status400BadRequest)
                  .Produces<ApiResponse>(StatusCodes.Status404NotFound)
@@ -34,7 +34,7 @@ namespace WebMinimalExample.Endpoints
 
             categoryGroup.MapPut("/{id:int}", UpdateCategory)
                  .WithName("UpdateCategory")
-                 .RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
+                 //.RequireAuthorization(u => u.RequireRole(StaticDetails.AdminRole))
                  .Produces<ApiResponse>(StatusCodes.Status200OK)
                  .Produces<ApiResponse>(StatusCodes.Status404NotFound)
                  .Produces<ApiResponse>(StatusCodes.Status400BadRequest)

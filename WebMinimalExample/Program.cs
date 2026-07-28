@@ -9,6 +9,7 @@ using WebMinimalExample.Data;
 using WebMinimalExample.Endpoints;
 using WebMinimalExample.Models;
 using WebMinimalExample.Models.DTOs;
+using WebMinimalExample.Models.DTOs.Item;
 using WebMinimalExample.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -92,7 +93,7 @@ builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
-//---------------------Auto Mapper -----------------------------------------------------------------------
+//---------------------Auto MapperConfig  For Category  -----------------------------------------------------------------------
 
 builder.Services.AddAutoMapper(cfg =>
 {
@@ -108,6 +109,27 @@ builder.Services.AddAutoMapper(cfg =>
 
 });
 
+
+
+//---------------------Auto MapperConfig  For Menu Items  -----------------------------------------------------------------------
+
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.CreateMap<MenuItem, MenuItemDTO>()
+         .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty));
+    cfg.CreateMap<MenuItemCreateDTO, MenuItem>()
+        .ForMember(dest => dest.Id, opt => opt.Ignore())
+        .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+        .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+        .ForMember(dest => dest.Category, opt => opt.Ignore());
+    cfg.CreateMap<MenuItemUpdateDTO, MenuItem>()
+        .ForMember(dest => dest.Id, opt => opt.Ignore())
+        .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+        .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()) // Image updated only via upload endpoint
+        .ForMember(dest => dest.Category, opt => opt.Ignore());
+
+});
 //-----------------------------Build-----------------------------------------------------------------------
 
 
