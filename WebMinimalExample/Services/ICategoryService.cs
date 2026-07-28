@@ -13,14 +13,25 @@ namespace WebMinimalExample.Services
 }
 
 /*
+
+Format : Task<IEnumerable<CategoryDTO>> GetAllCategoriesAsync();
+
+Task<IEnumerable<CategoryDTO>> GetAllCategoriesAsync();
+│                    │                 │                │
+│                    │                 │                └── End of declaration
+│                    │                 └────────────────── Method name
+│                    └──────────────────────────────────── Returns a collection of CategoryDTO
+└───────────────────────────────────────────────────────── Async return type
+
+
+
+------------------------------IEnumerable ---------------------------------------
  
  IEnumerable<T> is an interface in C# that represents a collection of objects that can be iterated (looped through).
 
 In your code: IEnumerable<CategoryDTO>
 
-It means:
-
-"This method returns a collection (list) of CategoryDTO objects."
+It means: This method returns a collection (list) of CategoryDTO objects.
 
 
 Why not return List<CategoryDTO>?
@@ -43,4 +54,8 @@ categories.Add(new CategoryDTO());
 categories.RemoveAt(0);
 
 Returning IEnumerable<T> hides the implementation details and is generally preferred when the caller only needs to read the data.
+
+
+ * -------------------------------------------------------------------------------------------------------------
+
  */
