@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -26,10 +27,30 @@ builder.Services.AddApiVersioning(options =>
 {
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+})
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
 });
 
+var apiVersions = new[]
+{
+    new ApiVersion(1, 0),
+    new ApiVersion(2, 0)
+};
+
+foreach (var apiVersion in apiVersions)
+{
+    var versionName = apiVersion.ToString();
+
+    Console.WriteLine($"API Version: {versionName}");
+}
+
+
 //---------------------Scaller UI-----------------------------------------------------------------------
-builder.Services.AddOpenApi(options =>
+builder.Services.AddOpenApi(versionName, options =>
 {
     options.AddDocumentTransformer((document, context, cancellationToken) =>
     {
