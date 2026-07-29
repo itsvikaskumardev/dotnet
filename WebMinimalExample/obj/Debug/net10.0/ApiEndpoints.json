@@ -91,9 +91,9 @@
     "EndpointName": "Register"
   },
   {
-    "ContainingType": "WebMinimalExample.Endpoints.v2.CategoryEndpoints",
+    "ContainingType": "WebMinimalExample.Endpoints.v1.CategoryEndpoints",
     "Method": "GetAllCategories",
-    "RelativePath": "api/categories/",
+    "RelativePath": "apiv1/categories/",
     "HttpMethod": "GET",
     "IsController": false,
     "Order": 0,
@@ -120,9 +120,203 @@
     "EndpointName": "GetAllCategories"
   },
   {
-    "ContainingType": "WebMinimalExample.Endpoints.v2.MenuItemEndpoints",
+    "ContainingType": "WebMinimalExample.Endpoints.v1.CategoryEndpoints",
+    "Method": "CreateCategory",
+    "RelativePath": "apiv1/categories/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryCreateDTO",
+        "Type": "WebMinimalExample.Models.DTOs.CategoryCreateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "EndpointName": "CreateCategory"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.CategoryEndpoints",
+    "Method": "GetCategoryById",
+    "RelativePath": "apiv1/categories/{id:int}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "EndpointName": "GetCategoryById"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.CategoryEndpoints",
+    "Method": "UpdateCategory",
+    "RelativePath": "apiv1/categories/{id:int}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "categoryUpdateDTO",
+        "Type": "WebMinimalExample.Models.DTOs.CategoryUpdateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "EndpointName": "UpdateCategory"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.CategoryEndpoints",
+    "Method": "DeleteCategory",
+    "RelativePath": "apiv1/categories/{id:int}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "Categories"
+    ],
+    "EndpointName": "DeleteCategory"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.MenuItemEndpoints",
     "Method": "GetAllMenuItems",
-    "RelativePath": "api/menuitems/",
+    "RelativePath": "apiv1/menuitems/",
     "HttpMethod": "GET",
     "IsController": false,
     "Order": 0,
@@ -147,5 +341,202 @@
       "MenuItems"
     ],
     "EndpointName": "GetAllMenuItems"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.MenuItemEndpoints",
+    "Method": "CreateMenuItem",
+    "RelativePath": "apiv1/menuitems/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "menuItemCreateDTO",
+        "Type": "WebMinimalExample.Models.DTOs.MenuItemCreateDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "formFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "MenuItems"
+    ],
+    "EndpointName": "CreateMenuItem"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.MenuItemEndpoints",
+    "Method": "GetMenuItemById",
+    "RelativePath": "apiv1/menuitems/{id:int}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "MenuItems"
+    ],
+    "EndpointName": "GetMenuItemById"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.MenuItemEndpoints",
+    "Method": "UpdateMenuItem",
+    "RelativePath": "apiv1/menuitems/{id:int}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "menuItemUpdateDTO",
+        "Type": "WebMinimalExample.Models.DTOs.Item.MenuItemUpdateDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "formFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "MenuItems"
+    ],
+    "EndpointName": "UpdateMenuItem"
+  },
+  {
+    "ContainingType": "WebMinimalExample.Endpoints.v1.MenuItemEndpoints",
+    "Method": "DeleteMenuItem",
+    "RelativePath": "apiv1/menuitems/{id:int}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "WebMinimalExample.Models.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 500
+      }
+    ],
+    "Tags": [
+      "MenuItems"
+    ],
+    "EndpointName": "DeleteMenuItem"
   }
 ]

@@ -13,9 +13,10 @@ namespace WebMinimalExample.Endpoints.v1
 {
     public static class MenuItemEndpoints
     {
-        public static void MapMenuItemEndpoints(this IEndpointRouteBuilder app)
+        public static void MapMenuItemEndpointsV1(this IEndpointRouteBuilder app)
         {
-            var menuItemGroup = app.MapGroup("/apiv{version:apiVersion}/menuitems").WithTags("MenuItems").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
+            var api = app.NewVersionedApi("MenuItems");
+            var menuItemGroup = api.MapGroup("/apiv{version:apiVersion}/menuitems").WithTags("MenuItems").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
 
             menuItemGroup.MapGet("/", GetAllMenuItems)
                      .WithName("GetAllMenuItems")

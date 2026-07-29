@@ -8,6 +8,7 @@ using Scalar.AspNetCore;
 using System.Text;
 using WebMinimalExample.Data;
 using WebMinimalExample.Endpoints;
+using WebMinimalExample.Endpoints.v1;
 using WebMinimalExample.Endpoints.v2;
 using WebMinimalExample.Models;
 using WebMinimalExample.Models.DTOs;
@@ -43,45 +44,44 @@ var apiVersions = new[]
 
 foreach (var apiVersion in apiVersions)
 {
-    var versionName = apiVersion.ToString();
+    var versionName = $"v{apiVersion.MajorVersion}";
 
     Console.WriteLine($"API Version: {versionName}");
-}
 
-
-//---------------------Scaller UI-----------------------------------------------------------------------
-builder.Services.AddOpenApi(versionName, options =>
-{
-    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    //---------------------Scaller UI-----------------------------------------------------------------------
+    builder.Services.AddOpenApi(versionName, options =>
     {
-        document.Info = new OpenApiInfo
+        options.AddDocumentTransformer((document, context, cancellationToken) =>
         {
-            Title = "WebMinimalExample API",
-            Version = "v1",
-            Description = "Minimal API with JWT Bearer Authentication"
-        };
+            document.Info = new OpenApiInfo
+            {
+                Title = $"WebMinimalExample API ({versionName})",
+                Version = versionName,
+                Description = "Minimal API with JWT Bearer Authentication"
+            };
 
-        var components = document.Components ??= new OpenApiComponents();
-        var schemes = components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
-        schemes["Bearer"] = new OpenApiSecurityScheme
-        {
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Description = "Enter your JWT token in the format: Bearer {your token}"
-        };
+            var components = document.Components ??= new OpenApiComponents();
+            var schemes = components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+            schemes["Bearer"] = new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Enter your JWT token in the format: Bearer {your token}"
+            };
 
-        var security = document.Security ??= new List<OpenApiSecurityRequirement>();
-        security.Add(new OpenApiSecurityRequirement
-        {
-            [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
+            var security = document.Security ??= new List<OpenApiSecurityRequirement>();
+            security.Add(new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
+            });
+
+            return Task.CompletedTask;
         });
-
-        return Task.CompletedTask;
     });
-});
+}
 
 //---------------------Db Connection and Jwt Token -----------------------------------------------------------------------
 
@@ -172,7 +172,10 @@ var app = builder.Build();
 //-----------------------------Scalar Document-----------------------------------------------------------------------
 
 app.MapOpenApi();
-app.MapScalarApiReference();
+app.MapScalarApiReference(options =>
+{
+    options.FooBar();
+});
 
 
 
@@ -191,8 +194,10 @@ app.UseStaticFiles();
 //-----------------------------Endpoints-----------------------------------------------------------------------
 
 
-app.MapCategoryEndpoints();
-app.MapMenuItemEndpoints();
+app.MapCategoryEndpointsV1();
+app.MapMenuItemEndpointsV1();
+app.MapCategoryEndpointsV2();
+app.MapMenuItemEndpointsV2();
 app.MapAuthEndpoints();
 
 
@@ -201,5 +206,9 @@ app.MapAuthEndpoints();
 app.UseHttpsRedirection();
 
 
+foreach (var m in typeof(Scalar.AspNetCore.ScalarOptions).GetMethods())
+{
+    Console.WriteLine($"ScalarOption Method: {m.Name}");
+}
 app.Run();
 

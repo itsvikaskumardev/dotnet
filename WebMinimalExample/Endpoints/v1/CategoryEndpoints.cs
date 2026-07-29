@@ -9,9 +9,10 @@ namespace WebMinimalExample.Endpoints.v1
 {
     public static class CategoryEndpoints
     {
-        public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
+        public static void MapCategoryEndpointsV1(this IEndpointRouteBuilder app)
         {
-            var categoryGroup = app.MapGroup("/apiv{version:apiVersion}/categories").WithTags("Categories").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
+            var api = app.NewVersionedApi("Categories");
+            var categoryGroup = api.MapGroup("/apiv{version:apiVersion}/categories").WithTags("Categories").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
 
             categoryGroup.MapGet("/", GetAllCategories)
                  .WithName("GetAllCategories")

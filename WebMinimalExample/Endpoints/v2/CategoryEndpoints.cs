@@ -8,12 +8,13 @@ namespace WebMinimalExample.Endpoints.v2
 {
     public static class CategoryEndpoints
     {
-        public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
+        public static void MapCategoryEndpointsV2(this IEndpointRouteBuilder app)
         {
-            var categoryGroup = app.MapGroup("/apiv{version:apiVersion}/categories").WithTags("Categories");//.RequireAuthorization();
+            var api = app.NewVersionedApi("Categories");
+            var categoryGroup = api.MapGroup("/apiv{version:apiVersion}/categories").WithTags("Categories").MapToApiVersion(new ApiVersion(2, 0));//.RequireAuthorization();
 
             categoryGroup.MapGet("/", GetAllCategories)
-                 .WithName("GetAllCategories")
+                 .WithName("GetAllCategoriesV2")
                  .Produces<ApiResponse>(StatusCodes.Status200OK)
                  .MapToApiVersion(new ApiVersion(2, 0))
                  .ProducesProblem(StatusCodes.Status500InternalServerError);
