@@ -7,6 +7,7 @@ using Scalar.AspNetCore;
 using System.Text;
 using WebMinimalExample.Data;
 using WebMinimalExample.Endpoints;
+using WebMinimalExample.Endpoints.v2;
 using WebMinimalExample.Models;
 using WebMinimalExample.Models.DTOs;
 using WebMinimalExample.Models.DTOs.Item;
@@ -16,6 +17,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+
+//---------------------API Versioning-----------------------------------------------------------------------
+
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+});
 
 //---------------------Scaller UI-----------------------------------------------------------------------
 builder.Services.AddOpenApi(options =>

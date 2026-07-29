@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "w6TACDmBw3A=",
+  "dgSpecHash": "/AlC6R3Bj5M=",
   "success": true,
   "projectFilePath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\WebMinimalExample\\WebMinimalExample.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\VikasKumar\\.nuget\\packages\\asp.versioning.abstractions\\10.0.0\\asp.versioning.abstractions.10.0.0.nupkg.sha512",
+    "C:\\Users\\VikasKumar\\.nuget\\packages\\asp.versioning.http\\10.0.0\\asp.versioning.http.10.0.0.nupkg.sha512",
+    "C:\\Users\\VikasKumar\\.nuget\\packages\\asp.versioning.mvc\\10.0.0\\asp.versioning.mvc.10.0.0.nupkg.sha512",
+    "C:\\Users\\VikasKumar\\.nuget\\packages\\asp.versioning.mvc.apiexplorer\\10.0.0\\asp.versioning.mvc.apiexplorer.10.0.0.nupkg.sha512",
     "C:\\Users\\VikasKumar\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
     "C:\\Users\\VikasKumar\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\VikasKumar\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

@@ -1,16 +1,17 @@
+using Asp.Versioning;
 using System.Net;
 using WebMinimalExample.Models;
 using WebMinimalExample.Models.DTOs;
 using WebMinimalExample.Services;
 
 
-namespace WebMinimalExample.Endpoints
+namespace WebMinimalExample.Endpoints.v1
 {
     public static class CategoryEndpoints
     {
         public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
         {
-            var categoryGroup = app.MapGroup("/api/categories").WithTags("Categories");//.RequireAuthorization();
+            var categoryGroup = app.MapGroup("/apiv{version:apiVersion}/categories").WithTags("Categories").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
 
             categoryGroup.MapGet("/", GetAllCategories)
                  .WithName("GetAllCategories")

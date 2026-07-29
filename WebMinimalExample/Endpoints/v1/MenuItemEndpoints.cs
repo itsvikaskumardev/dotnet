@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,13 +8,14 @@ using WebMinimalExample.Models;
 using WebMinimalExample.Models.DTOs;
 using WebMinimalExample.Models.DTOs.Item;
 
-namespace WebMinimalExample.Endpoints
+namespace WebMinimalExample.Endpoints.v1
+
 {
     public static class MenuItemEndpoints
     {
         public static void MapMenuItemEndpoints(this IEndpointRouteBuilder app)
         {
-            var menuItemGroup = app.MapGroup("/api/menuitems").WithTags("MenuItems");//.RequireAuthorization();
+            var menuItemGroup = app.MapGroup("/apiv{version:apiVersion}/menuitems").WithTags("MenuItems").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
 
             menuItemGroup.MapGet("/", GetAllMenuItems)
                      .WithName("GetAllMenuItems")
