@@ -16,7 +16,7 @@ namespace WebMinimalExample.Endpoints.v1
         public static void MapMenuItemEndpointsV1(this IEndpointRouteBuilder app)
         {
             var api = app.NewVersionedApi("MenuItems");
-            var menuItemGroup = api.MapGroup("/apiv{version:apiVersion}/menuitems").WithTags("MenuItems").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
+            var menuItemGroup = api.MapGroup("/apiv{version:apiVersion}/menuitems").WithGroupName("v1").WithTags("MenuItems").MapToApiVersion(new ApiVersion(1, 0));//.RequireAuthorization();
 
             menuItemGroup.MapGet("/", GetAllMenuItems)
                      .WithName("GetAllMenuItems")

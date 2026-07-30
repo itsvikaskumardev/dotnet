@@ -172,10 +172,7 @@ var app = builder.Build();
 //-----------------------------Scalar Document-----------------------------------------------------------------------
 
 app.MapOpenApi();
-app.MapScalarApiReference(options =>
-{
-    options.FooBar();
-});
+app.MapScalarApiReference();
 
 
 

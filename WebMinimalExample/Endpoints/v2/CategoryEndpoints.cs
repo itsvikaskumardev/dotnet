@@ -11,7 +11,7 @@ namespace WebMinimalExample.Endpoints.v2
         public static void MapCategoryEndpointsV2(this IEndpointRouteBuilder app)
         {
             var api = app.NewVersionedApi("Categories");
-            var categoryGroup = api.MapGroup("/apiv{version:apiVersion}/categories").WithTags("Categories").MapToApiVersion(new ApiVersion(2, 0));//.RequireAuthorization();
+            var categoryGroup = api.MapGroup("/apiv{version:apiVersion}/categories").WithGroupName("v2").WithTags("Categories").MapToApiVersion(new ApiVersion(2, 0));//.RequireAuthorization();
 
             categoryGroup.MapGet("/", GetAllCategories)
                  .WithName("GetAllCategoriesV2")
