@@ -160,9 +160,17 @@ namespace WebMinimalExample.Endpoints.v1
          */
         //---------------------------------------------------------------------------------------------------------------------
 
-        private static async Task<IResult> GetAllMenuItems(ApplicationDbContext db, IMapper mapper)
+        private static async Task<IResult> GetAllMenuItems(ApplicationDbContext db, IMapper mapper, string? name = null)
         {
-            var menuItems = await db.MenuItems.Include(u => u.Category).ToListAsync();
+            // name filter 
+            var query = db.MenuItems.Include(u => u.Category).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query = query.Where(u => u.Name.ToLower().Contains(name.Trim().ToLower()));
+            }
+
+            var menuItems = await query.ToListAsync();
             return Results.Ok(new ApiResponse
             {
                 IsSuccess = true,
