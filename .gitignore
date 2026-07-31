@@ -1,3 +1,43 @@
+# =========================
+# Visual Studio
+# =========================
 .vs/
-bin/
-obj/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# .NET Build Files
+# Ignore bin & obj in ALL projects
+# =========================
+**/bin/
+**/obj/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Environment Files
+# =========================
+**/.env
+.env
+
+# =========================
+# Node Modules
+# =========================
+**/node_modules/
+
+# =========================
+# Ignore old Express backend
+# =========================
+backend/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db

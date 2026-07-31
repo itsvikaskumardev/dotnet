@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\Dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj": {}
+    "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj": {}
   },
   "projects": {
-    "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\Dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj": {
+    "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\Dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
+        "projectUniqueName": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
         "projectName": "CQRSMediatorPattern",
-        "projectPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\Dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
+        "projectPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\DOTNET\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
         "packagesPath": "C:\\Users\\VikasKumar1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\dotnet\\CQRSMediatorPattern\\obj\\",
+        "outputPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\Dotnet\\CQRSMediatorPattern\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
