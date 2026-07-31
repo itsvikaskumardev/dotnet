@@ -2422,9 +2422,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
+      "projectUniqueName": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\Dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
       "projectName": "CQRSMediatorPattern",
-      "projectPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
+      "projectPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\Dotnet\\CQRSMediatorPattern\\CQRSMediatorPattern.csproj",
       "packagesPath": "C:\\Users\\VikasKumar1\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\VikasKumar\\OneDrive - ORGANICUT FRESH PRIVATE LIMITED\\Vikas\\dotnet\\CQRSMediatorPattern\\obj\\",
       "projectStyle": "PackageReference",
