@@ -406,8 +406,8 @@ C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExampl
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\v1.json
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\v2.json
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\v2_new.json
-C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\WebMinimalExample.staticwebassets.endpoints.json
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\WebMinimalExample.staticwebassets.runtime.json
+C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\WebMinimalExample.staticwebassets.endpoints.json
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\WebMinimalExample.exe
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\WebMinimalExample.deps.json
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\bin\Debug\net10.0\WebMinimalExample.runtimeconfig.json
@@ -538,10 +538,10 @@ C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExampl
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\WebMinim.59FA19E4.Up2Date
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\WebMinimalExample.dll
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\refint\WebMinimalExample.dll
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\WebMinimalExample.pdb
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\WebMinimalExample.genruntimeconfig.cache
 C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\ref\WebMinimalExample.dll
-C:\Users\VikasKumar1\OneDrive - SupplyIT\Documents\Vikas\Dotnet\WebMinimalExample\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

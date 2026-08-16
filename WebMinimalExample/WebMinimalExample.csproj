@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <NoWarn>$(NoWarn);NU1901;NU1902;NU1903;NU1904</NoWarn>
+    <UserSecretsId>aff16cc3-6913-4853-8818-9706365d13b5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
