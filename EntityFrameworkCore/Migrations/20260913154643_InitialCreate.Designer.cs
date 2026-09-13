@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260816121338_Schema")]
-    partial class Schema
+    [Migration("20260913154643_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,27 @@ namespace EntityFrameworkCore.Migrations
                     b.ToTable("Enrollments");
                 });
 
+            modelBuilder.Entity("EntityFrameworkCore.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("EntityFrameworkCore.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -152,6 +173,23 @@ namespace EntityFrameworkCore.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("EntityFrameworkCore.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("EntityFrameworkCore.Models.Course", b =>
                 {
                     b.HasOne("EntityFrameworkCore.Models.Department", "Department")
@@ -188,6 +226,17 @@ namespace EntityFrameworkCore.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCore.Models.Order", b =>
+                {
+                    b.HasOne("EntityFrameworkCore.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityFrameworkCore.Models.Student", b =>
@@ -234,6 +283,11 @@ namespace EntityFrameworkCore.Migrations
             modelBuilder.Entity("EntityFrameworkCore.Models.Teacher", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCore.Models.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

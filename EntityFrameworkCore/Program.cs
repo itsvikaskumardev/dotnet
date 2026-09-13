@@ -52,6 +52,8 @@ app.MapDepartmentEndpoints();
 app.MapTeacherEndpoints();
 app.MapCourseEndpoints();
 app.MapEnrollmentEndpoints();
+app.MapUserEndpoints();
+
 
 app.UseHttpsRedirection();
 
