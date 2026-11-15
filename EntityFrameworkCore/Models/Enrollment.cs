@@ -1,14 +1,14 @@
-﻿namespace EntityFrameworkCore.Models
+namespace EntityFrameworkCore.Models
 {
     public class Enrollment
     {
         public int Id { get; set; }
 
         public int StudentId { get; set; }
-        public Student Student { get; set; } = null!;
+        public virtual Student Student { get; set; } = null!;
 
         public int CourseId { get; set; }
-        public Course Course { get; set; } = null!;
+        public virtual Course Course { get; set; } = null!;
 
         public decimal Marks { get; set; }
         public DateTime EnrollmentDate { get; set; }

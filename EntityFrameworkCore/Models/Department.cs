@@ -1,4 +1,4 @@
-﻿namespace EntityFrameworkCore.Models
+namespace EntityFrameworkCore.Models
 {
     public class Department
     // 1. Department → 2. Teacher → 3. Course → 4. Student → 5. Enrollment
@@ -7,9 +7,9 @@
         public string Name { get; set; } = string.Empty;
 
         // One Department → Many Students
-        public ICollection<Student> Students { get; set; } = new List<Student>();
-        public ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        public virtual ICollection<Student> Students { get; set; } = new List<Student>();
+        public virtual ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
+        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }
 

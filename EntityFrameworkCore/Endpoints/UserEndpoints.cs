@@ -11,7 +11,7 @@ namespace EntityFrameworkCore.Endpoints
 
             group.MapGet("/list-n+1", async (ApplicationDbContext dbContext) =>
             {
-                // N+1 query problem
+                // N+1 query problem -Lazy Loading 
                 var users = await dbContext.Users.ToListAsync();
 
                 var result = new List<object>();
@@ -67,4 +67,3 @@ namespace EntityFrameworkCore.Endpoints
 
 }
 
-/

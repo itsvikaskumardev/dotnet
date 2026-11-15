@@ -17,5 +17,7 @@ namespace EntityFrameworkCore.Data
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<WmsOrder> WmsOrders { get; set; }
+
     }
 }

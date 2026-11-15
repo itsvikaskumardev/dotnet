@@ -1,6 +1,8 @@
 using EntityFrameworkCore.Data;
+using EntityFrameworkCore.Data.Interceptors;
 using EntityFrameworkCore.Endpoints;
-using EntityFrameworkCore.Models;
+using EntityFrameworkCore.Interfaces;
+using EntityFrameworkCore.Services;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -8,14 +10,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
-//--- Db Set Up
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+// 1. HTTP Context Accessor
+builder.Services.AddHttpContextAccessor();
 
-/*Object Cycle Error
+// 2. Current User Service
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-The problem occurs because Student → Department → Students → Department creates an infinite object loop when ASP.NET Core converts the EF Core entities to JSON.
+// 3. Register EF Core Interceptor
+builder.Services.AddScoped<AuditableInterceptor>();
+
+// 4. DbContext Set Up + Interceptor
+builder.Services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+    options
+        .UseLazyLoadingProxies()
+        .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .AddInterceptors(serviceProvider.GetRequiredService<AuditableInterceptor>()));
+
+/*
+Object Cycle Error:
+The problem occurs because Student -> Department -> Students -> Department creates an infinite object loop when ASP.NET Core converts the EF Core entities to JSON.
 
 Solution: Tell the JSON serializer to ignore circular references:
 */
@@ -47,13 +60,14 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// Map Endpoint Modules
 app.MapStudentEndpoints();
 app.MapDepartmentEndpoints();
 app.MapTeacherEndpoints();
 app.MapCourseEndpoints();
 app.MapEnrollmentEndpoints();
 app.MapUserEndpoints();
-
+app.MapWmsOrderEndpoints();
 
 app.UseHttpsRedirection();
 

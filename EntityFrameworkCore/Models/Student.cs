@@ -1,4 +1,4 @@
-﻿namespace EntityFrameworkCore.Models
+namespace EntityFrameworkCore.Models
 {
     public class Student
     {
@@ -22,9 +22,9 @@
          */
 
         // One Student → One Department
-        public Department Department { get; set; } = null!;
+        public virtual Department Department { get; set; } = null!;
 
-        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
     }
 }

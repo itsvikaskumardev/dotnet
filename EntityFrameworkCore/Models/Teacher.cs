@@ -1,4 +1,4 @@
-﻿namespace EntityFrameworkCore.Models
+namespace EntityFrameworkCore.Models
 {
     public class Teacher
     {
@@ -6,8 +6,8 @@
         public string Name { get; set; } = string.Empty;
 
         public int DepartmentId { get; set; }
-        public Department Department { get; set; } = null!;
+        public virtual Department Department { get; set; } = null!;
 
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }
