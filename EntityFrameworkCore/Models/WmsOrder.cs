@@ -17,5 +17,9 @@ namespace EntityFrameworkCore.Models
         public DateTime? ModifiedDate { get; set; }
 
         public string? ModifiedBy { get; set; }
+
+        // Navigation Property
+        public virtual ICollection<WmsOrderItem> Items { get; set; }
+            = new List<WmsOrderItem>();
     }
 }

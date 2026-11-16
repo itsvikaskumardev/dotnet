@@ -125,6 +125,28 @@ namespace EntityFrameworkCore.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("EntityFrameworkCore.Models.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SKU")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("EntityFrameworkCore.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -224,6 +246,33 @@ namespace EntityFrameworkCore.Migrations
                     b.ToTable("WmsOrders");
                 });
 
+            modelBuilder.Entity("EntityFrameworkCore.Models.WmsOrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("WmsOrderId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("WmsOrderId");
+
+                    b.ToTable("WmsOrderItems");
+                });
+
             modelBuilder.Entity("EntityFrameworkCore.Models.Course", b =>
                 {
                     b.HasOne("EntityFrameworkCore.Models.Department", "Department")
@@ -295,6 +344,25 @@ namespace EntityFrameworkCore.Migrations
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("EntityFrameworkCore.Models.WmsOrderItem", b =>
+                {
+                    b.HasOne("EntityFrameworkCore.Models.Product", "Product")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityFrameworkCore.Models.WmsOrder", "WmsOrder")
+                        .WithMany("Items")
+                        .HasForeignKey("WmsOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("WmsOrder");
+                });
+
             modelBuilder.Entity("EntityFrameworkCore.Models.Course", b =>
                 {
                     b.Navigation("Enrollments");
@@ -307,6 +375,11 @@ namespace EntityFrameworkCore.Migrations
                     b.Navigation("Students");
 
                     b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCore.Models.Product", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("EntityFrameworkCore.Models.Student", b =>
@@ -322,6 +395,11 @@ namespace EntityFrameworkCore.Migrations
             modelBuilder.Entity("EntityFrameworkCore.Models.User", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCore.Models.WmsOrder", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

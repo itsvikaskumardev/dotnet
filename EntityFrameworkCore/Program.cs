@@ -68,6 +68,7 @@ app.MapCourseEndpoints();
 app.MapEnrollmentEndpoints();
 app.MapUserEndpoints();
 app.MapWmsOrderEndpoints();
+app.MapProductEndpoints();
 
 app.UseHttpsRedirection();
 

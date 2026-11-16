@@ -1,4 +1,4 @@
-﻿using EntityFrameworkCore.Models;
+using EntityFrameworkCore.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.Data
@@ -18,6 +18,7 @@ namespace EntityFrameworkCore.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<WmsOrder> WmsOrders { get; set; }
-
+        public DbSet<WmsOrderItem> WmsOrderItems { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
