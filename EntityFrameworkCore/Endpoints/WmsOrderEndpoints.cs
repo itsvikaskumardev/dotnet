@@ -186,6 +186,178 @@ namespace EntityFrameworkCore.Endpoints
             })
             .WithName("GetWmsOrderByIdWithInclude")
             .WithSummary("Get WMS Order by ID using Include");
+
+            // 8. Get Order By Id Using LINQ Query Syntax
+            group.MapGet("/query-syntax/{id:guid}", async (
+                Guid id,
+                ApplicationDbContext context) =>
+            {
+                var order = await (
+                    from o in context.WmsOrders.AsNoTracking()
+                    where o.Id == id
+                    select new
+                    {
+                        o.Id,
+                        o.OrderNumber,
+                        o.Status,
+                        o.CreatedDate,
+                        Items = (
+                            from oi in context.WmsOrderItems
+                            join p in context.Products on oi.ProductId equals p.Id
+                            where oi.WmsOrderId == o.Id
+                            select new
+                            {
+                                oi.Id,
+                                oi.Quantity,
+                                oi.UnitPrice,
+                                Product = new
+                                {
+                                    p.Id,
+                                    p.ProductName,
+                                    p.SKU,
+                                    p.Price
+                                }
+                            }
+                        ).ToList()
+                    }
+                ).FirstOrDefaultAsync();
+
+                if (order is null)
+                {
+                    return Results.NotFound(new { message = "Order not found" });
+                }
+
+                return Results.Ok(order);
+            })
+            .WithName("GetWmsOrderByQuerySyntax")
+            .WithSummary("Get WMS Order by ID using LINQ Query Syntax");
+
+            // 9. Get Order By Id Using LINQ Method Syntax
+            group.MapGet("/method-syntax/{id:guid}", async (
+                Guid id,
+                ApplicationDbContext context) =>
+            {
+                var order = await context.WmsOrders
+                    .AsNoTracking()
+                    .Where(o => o.Id == id)
+                    .Select(o => new
+                    {
+                        o.Id,
+                        o.OrderNumber,
+                        o.Status,
+                        o.CreatedDate,
+                        Items = context.WmsOrderItems
+                            .Where(oi => oi.WmsOrderId == o.Id)
+                            .Join(
+                                context.Products,
+                                oi => oi.ProductId,
+                                p => p.Id,
+                                (oi, p) => new
+                                {
+                                    oi.Id,
+                                    oi.Quantity,
+                                    oi.UnitPrice,
+                                    Product = new
+                                    {
+                                        p.Id,
+                                        p.ProductName,
+                                        p.SKU,
+                                        p.Price
+                                    }
+                                }
+                            )
+                            .ToList()
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (order is null)
+                {
+                    return Results.NotFound(new { message = "Order not found" });
+                }
+
+                return Results.Ok(order);
+            })
+            .WithName("GetWmsOrderByMethodSyntax")
+            .WithSummary("Get WMS Order by ID using LINQ Method Syntax");
+
+            // 10. Get Orders Using IQueryable (Database-side filtering)
+            group.MapGet("/queryable", async (
+                ApplicationDbContext context) =>
+            {
+                // Query database level par build hoti hai (SQL WHERE clause generate hota hai)
+                IQueryable<WmsOrder> query = context.WmsOrders
+                    .AsNoTracking()
+                    .Where(o => o.Status == "Pending");
+
+                var result = await query
+                    .Select(o => new
+                    {
+                        o.Id,
+                        o.OrderNumber,
+                        o.Status,
+                        Items = o.Items.Select(oi => new
+                        {
+                            oi.Id,
+                            oi.Quantity,
+                            oi.UnitPrice,
+                            Product = new
+                            {
+                                oi.Product.Id,
+                                oi.Product.ProductName,
+                                oi.Product.SKU,
+                                oi.Product.Price
+                            }
+                        }).ToList()
+                    })
+                    .ToListAsync();
+
+                return Results.Ok(result);
+            })
+            .WithName("GetOrdersUsingIQueryable")
+            .WithSummary("Get Pending Orders using IQueryable (Database-side Filter)");
+
+            // 11. Get Orders Using IEnumerable (In-Memory filtering)
+            group.MapGet("/ienumerable", async (
+                ApplicationDbContext context) =>
+            {
+                // Step 1: Database se data fetch karo
+                var orders = await context.WmsOrders
+                    .AsNoTracking()
+                    .Include(o => o.Items)
+                        .ThenInclude(oi => oi.Product)
+                    .ToListAsync();
+
+                // Step 2: Data ab memory mein available hai
+                IEnumerable<WmsOrder> query = orders;
+
+                // Step 3: In-memory filtering
+                var result = query
+                    .Where(o => o.Status == "Pending")
+                    .Select(o => new
+                    {
+                        o.Id,
+                        o.OrderNumber,
+                        o.Status,
+                        Items = o.Items.Select(oi => new
+                        {
+                            oi.Id,
+                            oi.Quantity,
+                            oi.UnitPrice,
+                            Product = new
+                            {
+                                oi.Product.Id,
+                                oi.Product.ProductName,
+                                oi.Product.SKU,
+                                oi.Product.Price
+                            }
+                        }).ToList()
+                    })
+                    .ToList();
+
+                return Results.Ok(result);
+            })
+            .WithName("GetOrdersUsingIEnumerable")
+            .WithSummary("Get Pending Orders using IEnumerable (In-Memory Filter)");
         }
     }
 
