@@ -1,0 +1,29 @@
+@Chai_aur_Redis_HostAddress = http://localhost:5219
+
+### 1. Set Site Banner in Redis
+POST {{Chai_aur_Redis_HostAddress}}/api/site-banner/set-banner
+Content-Type: application/json
+
+{
+  "banner": "Welcome to Chai aur Redis! Enjoy 50% discount!"
+}
+
+###
+
+### 2. Check if Site Banner Exists in Redis
+GET {{Chai_aur_Redis_HostAddress}}/api/site-banner/banner/exists
+Accept: application/json
+
+###
+
+### 3. Get Site Banner from Redis
+GET {{Chai_aur_Redis_HostAddress}}/api/site-banner/get-banner
+Accept: application/json
+
+###
+
+### 4. Delete Site Banner from Redis
+DELETE {{Chai_aur_Redis_HostAddress}}/api/site-banner/delete-banner
+Accept: application/json
+
+###

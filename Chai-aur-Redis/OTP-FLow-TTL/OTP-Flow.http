@@ -1,0 +1,34 @@
+@Chai_aur_Redis_HostAddress = http://localhost:5219
+
+### 1. Generate OTP (Valid for 30 Seconds)
+POST {{Chai_aur_Redis_HostAddress}}/api/otp/generate
+Content-Type: application/json
+
+{
+  "phoneNumber": "9876543210"
+}
+
+###
+
+### 2. Check Remaining OTP TTL (Time To Live in Seconds)
+GET {{Chai_aur_Redis_HostAddress}}/api/otp/9876543210/ttl
+Accept: application/json
+
+###
+
+### 3. Verify OTP
+POST {{Chai_aur_Redis_HostAddress}}/api/otp/verify
+Content-Type: application/json
+
+{
+  "phoneNumber": "9876543210",
+  "otp": "123456"
+}
+
+###
+
+### 4. Delete OTP Manually
+DELETE {{Chai_aur_Redis_HostAddress}}/api/otp/9876543210
+Accept: application/json
+
+###

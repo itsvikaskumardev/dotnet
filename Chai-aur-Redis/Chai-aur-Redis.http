@@ -1,6 +1,88 @@
 @Chai_aur_Redis_HostAddress = http://localhost:5219
 
-GET {{Chai_aur_Redis_HostAddress}}/weatherforecast/
+### --- DATABASE HEALTH CHECKS ---
+
+### 1. Check BOTH Redis & PostgreSQL Health
+GET {{Chai_aur_Redis_HostAddress}}/api/database/health
+Accept: application/json
+
+###
+
+### 2. Check Redis Health
+GET {{Chai_aur_Redis_HostAddress}}/api/database/redis
+Accept: application/json
+
+###
+
+### 3. Check PostgreSQL Health
+GET {{Chai_aur_Redis_HostAddress}}/api/database/postgres
+Accept: application/json
+
+###
+
+
+### --- SITE BANNER (REDIS STRINGS) ---
+
+### 4. Set Site Banner in Redis
+POST {{Chai_aur_Redis_HostAddress}}/api/site-banner/set-banner
+Content-Type: application/json
+
+{
+  "banner": "Welcome to Chai aur Redis! Enjoy 50% discount!"
+}
+
+###
+
+### 5. Check if Site Banner Exists in Redis
+GET {{Chai_aur_Redis_HostAddress}}/api/site-banner/banner/exists
+Accept: application/json
+
+###
+
+### 6. Get Site Banner from Redis
+GET {{Chai_aur_Redis_HostAddress}}/api/site-banner/get-banner
+Accept: application/json
+
+###
+
+### 7. Delete Site Banner from Redis
+DELETE {{Chai_aur_Redis_HostAddress}}/api/site-banner/delete-banner
+Accept: application/json
+
+###
+
+
+### --- OTP FLOW (REDIS TTL) ---
+
+### 8. Generate OTP (30s TTL)
+POST {{Chai_aur_Redis_HostAddress}}/api/otp/generate
+Content-Type: application/json
+
+{
+  "phoneNumber": "9876543210"
+}
+
+###
+
+### 9. Check OTP Remaining TTL
+GET {{Chai_aur_Redis_HostAddress}}/api/otp/9876543210/ttl
+Accept: application/json
+
+###
+
+### 10. Verify OTP
+POST {{Chai_aur_Redis_HostAddress}}/api/otp/verify
+Content-Type: application/json
+
+{
+  "phoneNumber": "9876543210",
+  "otp": "123456"
+}
+
+###
+
+### 11. Delete OTP
+DELETE {{Chai_aur_Redis_HostAddress}}/api/otp/9876543210
 Accept: application/json
 
 ###

@@ -1,0 +1,19 @@
+@Chai_aur_Redis_HostAddress = http://localhost:5219
+
+### 1. Check BOTH Redis and PostgreSQL Health at once
+GET {{Chai_aur_Redis_HostAddress}}/api/database/health
+Accept: application/json
+
+###
+
+### 2. Check Redis Health Only
+GET {{Chai_aur_Redis_HostAddress}}/api/database/redis
+Accept: application/json
+
+###
+
+### 3. Check PostgreSQL Health Only
+GET {{Chai_aur_Redis_HostAddress}}/api/database/postgres
+Accept: application/json
+
+###
