@@ -4,6 +4,7 @@ using Chai_aur_Redis.SetupLocal.Endpoints;
 using Chai_aur_Redis.SetupLocal.Services;
 using Chai_aur_Redis.SetupLocal.Services.Interfaces;
 using Chai_aur_Redis.SiteBanner.Endpoints;
+using Chai_aur_Redis.User_Json_Hash;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -40,5 +41,6 @@ app.UseHttpsRedirection();
 app.MapDatabaseEndpoints();
 app.MapSiteBannerEndpoints();
 app.MapOTPFlowEndpoints();
+app.MapUserEndpoints();
 
 app.Run();

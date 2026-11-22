@@ -1,10 +1,11 @@
-using StackExchange.Redis;// It is a library helps to communicate with Redis to C# Application
+using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis; // It is a library helps to communicate with Redis to C# Application
 
 namespace Chai_aur_Redis.SiteBanner.Endpoints
 {
     public static class SiteBannerEndpoints
     {
-        private const string BannerKey = "app:banner";// app:banner is a actual Redis Key
+        private const string BannerKey = "app:banner"; // app:banner is an actual Redis Key
 
         public static IEndpointRouteBuilder MapSiteBannerEndpoints(this IEndpointRouteBuilder routes)
         {
@@ -50,11 +51,11 @@ namespace Chai_aur_Redis.SiteBanner.Endpoints
             return routes;
         }
 
-        private static async Task<IResult> SetBannerAsync(IConnectionMultiplexer redis, BannerRequest? request)
+        private static async Task<IResult> SetBannerAsync(IConnectionMultiplexer redis, [FromBody] BannerRequest? request)
         {
             try
             {
-                var db = redis.GetDatabase();// Redis logical database access.
+                var db = redis.GetDatabase(); // Redis logical database access.
                 var bannerText = !string.IsNullOrWhiteSpace(request?.Banner)
                     ? request.Banner.Trim()
                     : "This is a Default Value of this Key";

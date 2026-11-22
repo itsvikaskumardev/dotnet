@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 
 namespace Chai_aur_Redis.OTP_FLow_TTL
@@ -33,27 +34,30 @@ namespace Chai_aur_Redis.OTP_FLow_TTL
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
             // Query parameter variant: /api/otp/phone/ttl?phoneNumber=...
-            group.MapGet("/phone/ttl", (IConnectionMultiplexer redis, string? phoneNumber) => 
+            group.MapGet("/phone/ttl", (IConnectionMultiplexer redis, [FromQuery] string? phoneNumber) => 
                 GetOtpTtlAsync(redis, phoneNumber ?? string.Empty))
                  .ExcludeFromDescription();
 
-            // Delete OTP manually
+            // Delete OTP manually by route parameter: /api/otp/{phoneNumber}
             group.MapDelete("/{phoneNumber}", DeleteOTPAsync)
                  .WithName("DeleteOTP")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status400BadRequest)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
-            group.MapDelete("", (IConnectionMultiplexer redis, DeleteOtpRequest? request) => 
-                DeleteOTPAsync(redis, request?.PhoneNumber ?? string.Empty))
-                 .ExcludeFromDescription();
+            // Delete OTP by query parameter or explicit body
+            group.MapDelete("", (IConnectionMultiplexer redis, [FromQuery] string? phoneNumber, [FromBody] DeleteOtpRequest? request) =>
+            {
+                var phone = !string.IsNullOrWhiteSpace(phoneNumber) ? phoneNumber : request?.PhoneNumber ?? string.Empty;
+                return DeleteOTPAsync(redis, phone);
+            }).ExcludeFromDescription();
 
             return routes;
         }
 
         private static string GetOtpKey(string phoneNumber) => $"otp:{phoneNumber.Trim()}";
 
-        private static async Task<IResult> GenerateOTPAsync(IConnectionMultiplexer redis, OtpPhoneNumberRequest? request)
+        private static async Task<IResult> GenerateOTPAsync(IConnectionMultiplexer redis, [FromBody] OtpPhoneNumberRequest? request)
         {
             if (string.IsNullOrWhiteSpace(request?.PhoneNumber))
             {
@@ -95,7 +99,7 @@ namespace Chai_aur_Redis.OTP_FLow_TTL
             }
         }
 
-        private static async Task<IResult> VerifyOTPAsync(IConnectionMultiplexer redis, VerifyOtpRequest? request)
+        private static async Task<IResult> VerifyOTPAsync(IConnectionMultiplexer redis, [FromBody] VerifyOtpRequest? request)
         {
             if (string.IsNullOrWhiteSpace(request?.PhoneNumber) || string.IsNullOrWhiteSpace(request?.Otp))
             {

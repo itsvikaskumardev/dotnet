@@ -1,0 +1,63 @@
+@Chai_aur_Redis_HostAddress = http://localhost:5219
+
+### 1. Save User as JSON (Redis String)
+POST {{Chai_aur_Redis_HostAddress}}/api/user/101/json
+Content-Type: application/json
+
+{
+  "name": "Hitesh Choudhary",
+  "email": "hitesh@example.com",
+  "role": "Teacher",
+  "channel": "Chai aur Code"
+}
+
+###
+
+### 2. Get User JSON
+GET {{Chai_aur_Redis_HostAddress}}/api/user/101/json
+Accept: application/json
+
+###
+
+### 3. Save User as Hash (Redis Hash)
+POST {{Chai_aur_Redis_HostAddress}}/api/user/101/hash
+Content-Type: application/json
+
+{
+  "name": "Hitesh Choudhary",
+  "email": "hitesh@example.com",
+  "role": "Instructor",
+  "location": "Jaipur"
+}
+
+###
+
+### 4. Get Entire User Hash (HGETALL)
+GET {{Chai_aur_Redis_HostAddress}}/api/user/101/hash
+Accept: application/json
+
+###
+
+### 5. Get Single Field from User Hash (HGET)
+GET {{Chai_aur_Redis_HostAddress}}/api/user/101/hash/email
+Accept: application/json
+
+###
+
+### 6. Delete User JSON Only
+DELETE {{Chai_aur_Redis_HostAddress}}/api/user/101/json
+Accept: application/json
+
+###
+
+### 7. Delete User Hash Only
+DELETE {{Chai_aur_Redis_HostAddress}}/api/user/101/hash
+Accept: application/json
+
+###
+
+### 8. Delete Both JSON and Hash for User
+DELETE {{Chai_aur_Redis_HostAddress}}/api/user/101
+Accept: application/json
+
+###

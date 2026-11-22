@@ -86,3 +86,68 @@ DELETE {{Chai_aur_Redis_HostAddress}}/api/otp/9876543210
 Accept: application/json
 
 ###
+
+
+### --- USER JSON & HASH (REDIS OBJECT STORAGE) ---
+
+### 12. Save User as JSON (Redis String)
+POST {{Chai_aur_Redis_HostAddress}}/api/user/101/json
+Content-Type: application/json
+
+{
+  "name": "Hitesh Choudhary",
+  "email": "hitesh@example.com",
+  "role": "Teacher",
+  "channel": "Chai aur Code"
+}
+
+###
+
+### 13. Get User JSON
+GET {{Chai_aur_Redis_HostAddress}}/api/user/101/json
+Accept: application/json
+
+###
+
+### 14. Save User as Hash (Redis Hash)
+POST {{Chai_aur_Redis_HostAddress}}/api/user/101/hash
+Content-Type: application/json
+
+{
+  "name": "Hitesh Choudhary",
+  "email": "hitesh@example.com",
+  "role": "Instructor",
+  "location": "Jaipur"
+}
+
+###
+
+### 15. Get Entire User Hash (HGETALL)
+GET {{Chai_aur_Redis_HostAddress}}/api/user/101/hash
+Accept: application/json
+
+###
+
+### 16. Get Specific Field from User Hash (HGET)
+GET {{Chai_aur_Redis_HostAddress}}/api/user/101/hash/email
+Accept: application/json
+
+###
+
+### 17. Delete User JSON Only
+DELETE {{Chai_aur_Redis_HostAddress}}/api/user/101/json
+Accept: application/json
+
+###
+
+### 18. Delete User Hash Only
+DELETE {{Chai_aur_Redis_HostAddress}}/api/user/101/hash
+Accept: application/json
+
+###
+
+### 19. Delete Both JSON and Hash for User
+DELETE {{Chai_aur_Redis_HostAddress}}/api/user/101
+Accept: application/json
+
+###
