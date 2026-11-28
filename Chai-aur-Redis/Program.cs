@@ -1,6 +1,7 @@
 using Chai_aur_Redis.Data;
 using Chai_aur_Redis.Email_Queue;
 using Chai_aur_Redis.OTP_FLow_TTL;
+using Chai_aur_Redis.Order_Confirmation_Jobs;
 using Chai_aur_Redis.SetupLocal.Endpoints;
 using Chai_aur_Redis.SetupLocal.Services;
 using Chai_aur_Redis.SetupLocal.Services.Interfaces;
@@ -29,6 +30,10 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 // Register application services
 builder.Services.AddScoped<IDatabaseHealthService, DatabaseHealthService>();
 
+// Register Order Confirmation & Background Worker Jobs
+builder.Services.AddSingleton<EmailQueue>();
+builder.Services.AddHostedService<EmailWorker>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
@@ -53,5 +58,6 @@ app.MapSiteBannerEndpoints();
 app.MapOTPFlowEndpoints();
 app.MapUserEndpoints();
 app.MapEmailQueueEndpoints();
+app.MapOrderConfirmationEndpoints();
 
 app.Run();

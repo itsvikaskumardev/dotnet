@@ -153,7 +153,7 @@ Accept: application/json
 ###
 
 
-### --- EMAIL QUEUE (REDIS LISTS - FIFO) ---
+### --- EMAIL QUEUE (REDIS LISTS - MANUAL POP) ---
 
 ### 20. Push Email to Queue (LPUSH)
 POST {{Chai_aur_Redis_HostAddress}}/api/emails
@@ -187,6 +187,38 @@ Accept: application/json
 
 ### 24. Clear Email Queue (DEL)
 DELETE {{Chai_aur_Redis_HostAddress}}/api/emails
+Accept: application/json
+
+###
+
+
+### --- ORDER CONFIRMATION & BACKGROUND WORKER JOBS ---
+
+### 25. Enqueue Welcome Email Job (Handled by Background EmailWorker)
+POST {{Chai_aur_Redis_HostAddress}}/api/jobs/welcome-email
+Content-Type: application/json
+
+{
+  "to": "learner@example.com",
+  "name": "Vikas Kumar"
+}
+
+###
+
+### 26. Enqueue Order Confirmation Job (Handled by Background EmailWorker)
+POST {{Chai_aur_Redis_HostAddress}}/api/jobs/order-confirmation
+Content-Type: application/json
+
+{
+  "to": "shopper@example.com",
+  "orderId": "ORD-50123",
+  "amount": 2999.00
+}
+
+###
+
+### 27. Check Pending Jobs Count
+GET {{Chai_aur_Redis_HostAddress}}/api/jobs/queue-length
 Accept: application/json
 
 ###

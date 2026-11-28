@@ -1,0 +1,30 @@
+@Chai_aur_Redis_HostAddress = http://localhost:5219
+
+### 1. Enqueue Welcome Email Job
+POST {{Chai_aur_Redis_HostAddress}}/api/jobs/welcome-email
+Content-Type: application/json
+
+{
+  "to": "hitesh@example.com",
+  "name": "Hitesh Choudhary"
+}
+
+###
+
+### 2. Enqueue Order Confirmation Email Job
+POST {{Chai_aur_Redis_HostAddress}}/api/jobs/order-confirmation
+Content-Type: application/json
+
+{
+  "to": "customer@example.com",
+  "orderId": "ORD-9842",
+  "amount": 1499.00
+}
+
+###
+
+### 3. Check Pending Jobs Count in Queue
+GET {{Chai_aur_Redis_HostAddress}}/api/jobs/queue-length
+Accept: application/json
+
+###
