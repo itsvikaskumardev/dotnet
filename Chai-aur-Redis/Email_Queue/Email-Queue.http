@@ -1,0 +1,49 @@
+@Chai_aur_Redis_HostAddress = http://localhost:5219
+
+### 1. Push Email to Queue (LPUSH)
+POST {{Chai_aur_Redis_HostAddress}}/api/emails
+Content-Type: application/json
+
+{
+  "to": "alex@example.com",
+  "subject": "Welcome to Chai aur Redis!",
+  "body": "Here is your registration confirmation."
+}
+
+###
+
+### 2. Push Another Email to Queue (LPUSH)
+POST {{Chai_aur_Redis_HostAddress}}/api/emails
+Content-Type: application/json
+
+{
+  "to": "sarah@example.com",
+  "subject": "Your Order Invoice #4512",
+  "body": "Thank you for your order."
+}
+
+###
+
+### 3. Check Queue Length (LLEN)
+GET {{Chai_aur_Redis_HostAddress}}/api/emails/length
+Accept: application/json
+
+###
+
+### 4. Peek Pending Emails without Popping (LRANGE)
+GET {{Chai_aur_Redis_HostAddress}}/api/emails/peek?count=5
+Accept: application/json
+
+###
+
+### 5. Pop and Process One Email (RPOP - FIFO)
+GET {{Chai_aur_Redis_HostAddress}}/api/emails/process-one
+Accept: application/json
+
+###
+
+### 6. Clear Email Queue (DEL)
+DELETE {{Chai_aur_Redis_HostAddress}}/api/emails
+Accept: application/json
+
+###

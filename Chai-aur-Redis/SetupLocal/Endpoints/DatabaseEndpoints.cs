@@ -7,11 +7,13 @@ namespace Chai_aur_Redis.SetupLocal.Endpoints
         public static IEndpointRouteBuilder MapDatabaseEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/database")
-                              .WithTags("Database Health");
+                              .WithTags("1. Database Health");
 
             // Check health of both Redis and PostgreSQL simultaneously
             group.MapGet("/health", CheckAllAsync)
                  .WithName("CheckAllDatabasesHealth")
+                 .WithSummary("Check health of both Redis & PostgreSQL")
+                 .WithDescription("Checks connection status to both Redis and PostgreSQL databases simultaneously.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
@@ -21,12 +23,16 @@ namespace Chai_aur_Redis.SetupLocal.Endpoints
             // Check Redis connection health
             group.MapGet("/redis", CheckRedisAsync)
                  .WithName("CheckRedisHealth")
+                 .WithSummary("Check Redis connection status")
+                 .WithDescription("Pings the Redis instance to verify network connectivity and latency.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
             // Check PostgreSQL connection health
             group.MapGet("/postgres", CheckPostgresAsync)
                  .WithName("CheckPostgresHealth")
+                 .WithSummary("Check PostgreSQL connection status")
+                 .WithDescription("Verifies EF Core can establish a connection with the local PostgreSQL database.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 

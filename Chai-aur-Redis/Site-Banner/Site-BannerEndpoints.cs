@@ -1,20 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis; // It is a library helps to communicate with Redis to C# Application
+using StackExchange.Redis;
 
 namespace Chai_aur_Redis.SiteBanner.Endpoints
 {
     public static class SiteBannerEndpoints
     {
-        private const string BannerKey = "app:banner"; // app:banner is an actual Redis Key
+        private const string BannerKey = "app:banner";
 
         public static IEndpointRouteBuilder MapSiteBannerEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/site-banner")
-                              .WithTags("Site Banner");
+                              .WithTags("2. Site Banner (Strings)");
 
             // Set banner in Redis
             group.MapPost("", SetBannerAsync)
                  .WithName("SetSiteBanner")
+                 .WithSummary("Set banner message in Redis")
+                 .WithDescription("Stores a global site banner message in Redis under key 'app:banner'.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
@@ -24,6 +26,8 @@ namespace Chai_aur_Redis.SiteBanner.Endpoints
             // Get banner from Redis
             group.MapGet("", GetBannerAsync)
                  .WithName("GetSiteBanner")
+                 .WithSummary("Get banner message from Redis")
+                 .WithDescription("Retrieves the active site banner text stored in Redis.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
@@ -33,6 +37,8 @@ namespace Chai_aur_Redis.SiteBanner.Endpoints
             // Check if banner exists in Redis
             group.MapGet("/exists", BannerExistsAsync)
                  .WithName("CheckBannerExists")
+                 .WithSummary("Check if banner key exists in Redis")
+                 .WithDescription("Checks if key 'app:banner' exists in Redis using KeyExists.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
@@ -42,6 +48,8 @@ namespace Chai_aur_Redis.SiteBanner.Endpoints
             // Delete banner from Redis
             group.MapDelete("", DeleteBannerAsync)
                  .WithName("DeleteSiteBanner")
+                 .WithSummary("Delete banner message from Redis")
+                 .WithDescription("Deletes key 'app:banner' from Redis.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
@@ -55,7 +63,7 @@ namespace Chai_aur_Redis.SiteBanner.Endpoints
         {
             try
             {
-                var db = redis.GetDatabase(); // Redis logical database access.
+                var db = redis.GetDatabase();
                 var bannerText = !string.IsNullOrWhiteSpace(request?.Banner)
                     ? request.Banner.Trim()
                     : "This is a Default Value of this Key";

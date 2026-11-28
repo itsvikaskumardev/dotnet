@@ -151,3 +151,42 @@ DELETE {{Chai_aur_Redis_HostAddress}}/api/user/101
 Accept: application/json
 
 ###
+
+
+### --- EMAIL QUEUE (REDIS LISTS - FIFO) ---
+
+### 20. Push Email to Queue (LPUSH)
+POST {{Chai_aur_Redis_HostAddress}}/api/emails
+Content-Type: application/json
+
+{
+  "to": "student@example.com",
+  "subject": "Welcome to Chai aur Redis!",
+  "body": "Here is your course confirmation."
+}
+
+###
+
+### 21. Check Queue Length (LLEN)
+GET {{Chai_aur_Redis_HostAddress}}/api/emails/length
+Accept: application/json
+
+###
+
+### 22. Peek Pending Queue Items (LRANGE)
+GET {{Chai_aur_Redis_HostAddress}}/api/emails/peek?count=5
+Accept: application/json
+
+###
+
+### 23. Pop & Process One Email (RPOP)
+GET {{Chai_aur_Redis_HostAddress}}/api/emails/process-one
+Accept: application/json
+
+###
+
+### 24. Clear Email Queue (DEL)
+DELETE {{Chai_aur_Redis_HostAddress}}/api/emails
+Accept: application/json
+
+###

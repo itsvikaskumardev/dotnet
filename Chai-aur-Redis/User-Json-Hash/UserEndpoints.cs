@@ -9,18 +9,22 @@ namespace Chai_aur_Redis.User_Json_Hash
         public static IEndpointRouteBuilder MapUserEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/user")
-                              .WithTags("User JSON & Hash");
+                              .WithTags("4. User Storage (JSON & Hashes)");
 
             // --- JSON Endpoints ---
             // Save User as JSON (Redis String)
             group.MapPost("/{id}/json", SaveUserJsonAsync)
                  .WithName("SaveUserJson")
+                 .WithSummary("Save user as JSON string")
+                 .WithDescription("Serializes and saves a user object into Redis under key 'user:{id}:json'.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
             // Get User JSON
             group.MapGet("/{id}/json", GetUserJsonAsync)
                  .WithName("GetUserJson")
+                 .WithSummary("Get user JSON string")
+                 .WithDescription("Retrieves and deserializes user JSON stored in Redis.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status404NotFound)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
@@ -28,6 +32,8 @@ namespace Chai_aur_Redis.User_Json_Hash
             // Delete User JSON
             group.MapDelete("/{id}/json", DeleteUserJsonAsync)
                  .WithName("DeleteUserJson")
+                 .WithSummary("Delete user JSON")
+                 .WithDescription("Deletes the 'user:{id}:json' key from Redis.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
@@ -35,12 +41,16 @@ namespace Chai_aur_Redis.User_Json_Hash
             // Save User as Hash (Redis Hash)
             group.MapPost("/{id}/hash", SaveUserHashAsync)
                  .WithName("SaveUserHash")
+                 .WithSummary("Save user as Redis Hash (HSET)")
+                 .WithDescription("Stores key-value dictionary as fields in a Redis Hash under key 'user:{id}:hash'.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
             // Get Entire User Hash (HGETALL)
             group.MapGet("/{id}/hash", GetUserHashAsync)
                  .WithName("GetUserHash")
+                 .WithSummary("Get entire user Hash (HGETALL)")
+                 .WithDescription("Fetches all fields and values for the user Hash using HGETALL.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status404NotFound)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
@@ -48,6 +58,8 @@ namespace Chai_aur_Redis.User_Json_Hash
             // Get Specific Field from User Hash (HGET)
             group.MapGet("/{id}/hash/{field}", GetUserHashFieldAsync)
                  .WithName("GetUserHashField")
+                 .WithSummary("Get specific field from user Hash (HGET)")
+                 .WithDescription("Fetches a single field from the user Hash using HGET.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status404NotFound)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
@@ -55,12 +67,16 @@ namespace Chai_aur_Redis.User_Json_Hash
             // Delete User Hash
             group.MapDelete("/{id}/hash", DeleteUserHashAsync)
                  .WithName("DeleteUserHash")
+                 .WithSummary("Delete user Hash")
+                 .WithDescription("Deletes the 'user:{id}:hash' key from Redis.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
             // Delete both JSON and Hash for a user
             group.MapDelete("/{id}", DeleteUserAsync)
                  .WithName("DeleteUserAll")
+                 .WithSummary("Delete both JSON & Hash for user")
+                 .WithDescription("Removes both 'user:{id}:json' and 'user:{id}:hash' keys from Redis.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
 
@@ -82,7 +98,7 @@ namespace Chai_aur_Redis.User_Json_Hash
                 var key = $"user:{id}:json";
 
                 var jsonString = JsonSerializer.Serialize(request);
-                await db.StringSetAsync(key, jsonString);
+                await db.StringSetAsync(key, jsonString);// stroed in string in redis
 
                 return Results.Ok(new
                 {
@@ -220,7 +236,6 @@ namespace Chai_aur_Redis.User_Json_Hash
                 var db = redis.GetDatabase();
                 var key = $"user:{id}:hash";
 
-                // HashGetAll retrieves all field-value pairs in the Redis Hash (HGETALL)
                 var entries = await db.HashGetAllAsync(key);
 
                 if (entries.Length == 0)
@@ -264,7 +279,6 @@ namespace Chai_aur_Redis.User_Json_Hash
                 var db = redis.GetDatabase();
                 var key = $"user:{id}:hash";
 
-                // HashGet retrieves a single field from the Redis Hash (HGET)
                 var value = await db.HashGetAsync(key, field);
 
                 if (value.IsNullOrEmpty)

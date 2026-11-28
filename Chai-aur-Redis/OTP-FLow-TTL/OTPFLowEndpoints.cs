@@ -10,11 +10,13 @@ namespace Chai_aur_Redis.OTP_FLow_TTL
         public static IEndpointRouteBuilder MapOTPFlowEndpoints(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/otp")
-                              .WithTags("OTP Flow");
+                              .WithTags("3. OTP Flow (TTL)");
 
             // Generate OTP with TTL (30 seconds)
             group.MapPost("/generate", GenerateOTPAsync)
                  .WithName("GenerateOTP")
+                 .WithSummary("Generate 6-digit OTP with 30s TTL")
+                 .WithDescription("Generates a random OTP, stores in Redis under key 'otp:{phone}' with a 30-second TTL.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status400BadRequest)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
@@ -22,6 +24,8 @@ namespace Chai_aur_Redis.OTP_FLow_TTL
             // Verify OTP
             group.MapPost("/verify", VerifyOTPAsync)
                  .WithName("VerifyOTP")
+                 .WithSummary("Verify OTP")
+                 .WithDescription("Compares submitted OTP against Redis key. Upon success, deletes key so it cannot be reused.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status400BadRequest)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
@@ -29,6 +33,8 @@ namespace Chai_aur_Redis.OTP_FLow_TTL
             // Check OTP remaining TTL
             group.MapGet("/{phoneNumber}/ttl", GetOtpTtlAsync)
                  .WithName("GetOTPTTL")
+                 .WithSummary("Get remaining TTL for OTP")
+                 .WithDescription("Returns remaining time-to-live (seconds) using Redis TTL metadata.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status400BadRequest)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
@@ -41,6 +47,8 @@ namespace Chai_aur_Redis.OTP_FLow_TTL
             // Delete OTP manually by route parameter: /api/otp/{phoneNumber}
             group.MapDelete("/{phoneNumber}", DeleteOTPAsync)
                  .WithName("DeleteOTP")
+                 .WithSummary("Delete OTP manually")
+                 .WithDescription("Manually removes the OTP key from Redis before expiration.")
                  .Produces(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status400BadRequest)
                  .Produces(StatusCodes.Status503ServiceUnavailable);
